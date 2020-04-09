@@ -1,0 +1,64 @@
+# Write your query or mutation here
+{
+  seasonsList{
+    url
+    year
+    urlMobile
+  }
+}
+
+query{
+  racesList{
+    raceName
+    Circuit{
+      circuitId
+    }
+  }
+}
+
+query{
+  racesListByYear(year:"2018"){
+    name
+    circuit{
+      id
+      location{
+        locality
+        lng
+      }
+    }
+  }
+}
+
+query{
+  driversList(elemPagina:15, pagina:2){
+    id
+    name
+  }
+}
+
+query {
+  round1: driversListByYearRound(year: "2010", round: 1) {
+    ...driverInfo
+  }
+  round2: driversListByYearRound(year: "2010", round: 2) {
+    ...driverInfo
+  }
+  round3: driversListByYearRound(year: "2010", round: 3) {
+    ...driverInfo
+  }
+}
+
+query {
+  round1: driverById(id: "alonso") {
+    ...driverInfo
+  }
+  
+}
+
+fragment driverInfo on Driver {
+  id
+  name
+  dateOfBirth
+  nationality
+  code
+}

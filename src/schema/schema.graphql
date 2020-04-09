@@ -1,0 +1,96 @@
+type Query {
+    "Listado de temporadas" 
+    seasonsList: [Season!]!
+    "Listado de carreras"
+    racesList: [Race!]!
+    """Listado de carreras por anio
+    Solo existen a partir del anio 1950 que es donde comenzo la F1"""
+    racesListByYear(year: String!): [Race!]!
+    "Listado de carreras por anio y carrera"
+    racesListByYearRound(year: String!, round: Int!): [Race!]!
+    """Listado de pilotos con opcion de paginado.
+    Si los parametros no se agregan, trae todos los pilotos."""
+    driversList(elemPagina: Int, pagina: Int, limite: Int): [Driver!]!
+    "Listado de pilotos por anio"
+    driversListByYear(year: String!): [Driver!]!
+    "Listado de pilotos por temporada y ronda"
+    driversListByYearRound(year: String!, round: Int!): [Driver!]!
+    "informacion de un piloto por apellido"
+    driverById(id:String!): Driver!
+    standingsListBySeasson(season:String!): [Standings!]!
+    circuitsList(elemPagina: Int, pagina: Int, limite: Int): [Circuit!]!
+    circuitByName(name: String!): Circuit!
+}
+
+type Mutation {
+    add(value: String!): [String]
+}
+
+type Season{
+    "Anio de la temporada"
+    year:String!
+    url:String!
+    urlMobile:String!
+}
+
+type Race{
+    season: String!
+    round: Int!
+    url: String!
+    urlMobile:String!
+    name: String!  ## aca name, en la data de la api es raceName. Entonces se resuelve en types.
+    circuit: Circuit!
+    date: String!
+    time: String
+}
+
+type Circuit{
+    id: String!
+    url: String!
+    urlMobile:String!
+    name:String!
+    location: Location!
+}
+
+type Location {
+    lat: Float!
+    lng: Float!
+    locality: String!
+    country: String!
+}
+
+type Driver {
+    id: String!
+    url: String!
+    urlMobile: String!
+    givenName: String!
+    familyName: String!
+    name: String!
+    dateOfBirth: String!
+    nationality: String!
+    code: String
+    permanetNumber: String
+}
+
+type Standings{
+        season: String!
+        round: Int!
+        driverStandings: [DriverStandings!]!
+    }
+
+type DriverStandings{
+        position: Int!
+        positionText: Int!
+        points: Int!
+        wins: Int!
+        driver: Driver!
+        constructors: [Constructor!]!
+    }
+
+type Constructor {
+        id: String!
+        url: String!
+        urlMobile:String!
+        name: String!
+        nationality: String!
+    }
